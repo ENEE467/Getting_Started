@@ -46,6 +46,7 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends --all
     tzdata \
     xclip \
     # mesa-utils \
+    ros-melodic-gripper-action-controller \
     x11proto-gl-dev && \
     sudo rm -rf /var/lib/apt/lists/*
 
