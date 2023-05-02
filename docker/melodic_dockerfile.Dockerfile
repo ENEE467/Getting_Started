@@ -20,6 +20,10 @@ ENV QT_X11_NO_MITSHM=1 \
     XDG_RUNTIME_DIR=/run/user/${UID} \
     TZ=America/New_York 
 
+# ENV NVIDIA_VISIBLE_DEVICES \
+#      ${NVIDIA_VISIBLE_DEVICES:-all}
+# ENV NVIDIA_DRIVER_CAPABILITIES \
+#     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 USER ${USER}
 WORKDIR ${HOME}
@@ -50,7 +54,6 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends --all
     tmux \
     tzdata \
     xclip \
-    # mesa-utils \
     mc \
     iproute2 \
     iputils-ping \   
@@ -64,15 +67,6 @@ ADD --chown=${USER}:${USER} https://raw.githubusercontent.com/kanishkaganguly/do
 # Remove duplicate sources
 RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' | sudo tee -a /etc/timezone
 
-# # Install OpenCV
-# # RUN cd ${HOME} && \
-# #     git clone https://github.com/opencv/opencv.git && \
-# #     git -C opencv checkout 4.x && \
-# #     mkdir -p build && cd build && \
-# #     cmake ../opencv && \
-# #     make -j4 && \
-# #     sudo make install
-
 # Install ROS packages
 RUN sudo apt-get update && sudo apt-get install -y \
     python-catkin-tools \
@@ -82,7 +76,10 @@ RUN sudo apt-get update && sudo apt-get install -y \
     ros-melodic-fiducial-msgs \
     ros-melodic-aruco-detect \
     # ros-melodic-gripper-action-controller \
-    libeigen3-dev
+    libeigen3-dev \
+    python-pymodbus \
+    python-serial \
+    ros-melodic-soem
 
 # Setup ROS workspace directory
 RUN mkdir -p $HOME/workspace/src && \
@@ -110,9 +107,6 @@ RUN source /opt/ros/melodic/setup.bash && \
     sudo apt update -qq && \
     rosdep update && \
     rosdep install --from-paths src --ignore-src -y
-    #  && \
-    # catkin build && \
-    # source devel/setup.bash
 
 # Set up working directory and bashrc
 WORKDIR ${HOME}/workspace/
