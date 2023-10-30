@@ -1,4 +1,4 @@
-FROM osrf/ros:melodic-desktop-full-bionic
+FROM osrf/ros:noetic-desktop-full
 
 # Set default shell
 SHELL ["/bin/bash", "-c"]
@@ -51,61 +51,50 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends --all
     mc \
     curl \
     iproute2 \
-    iputils-ping \   
+    iputils-ping \
+    cmake \
     x11proto-gl-dev && \
-    sudo rm -rf /var/lib/apt/lists/* 
+    sudo rm -rf /var/lib/apt/lists/*
 
 # Setup tmux config
-# ADD --chown=${USER}:${USER} https://raw.githubusercontent.com/kanishkaganguly/dotfiles/master/tmux/.tmux.bash.conf $HOME/.tmux.conf
+ADD --chown=${USER}:${USER} https://raw.githubusercontent.com/kanishkaganguly/dotfiles/master/tmux/.tmux.bash.conf $HOME/.tmux.conf
 
 # Set datetime and timezone correctly
-# Remove duplicate sources
 RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo '$TZ' | sudo tee -a /etc/timezone
-
-RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-
 
 # Install ROS packages
 RUN sudo apt-get update && sudo apt-get install -y \
-    python-catkin-tools \
-    ros-melodic-moveit-visual-tools \
-    ros-melodic-moveit-* \
-    ros-melodic-usb-cam \
-    ros-melodic-fiducial-msgs \
-    ros-melodic-aruco-detect \
+    python3-catkin-tools \
+    ros-noetic-moveit-visual-tools \
+    ros-noetic-moveit-* \
+    ros-noetic-usb-cam \
+    ros-noetic-fiducial-msgs \
+    ros-noetic-aruco-detect \
     # ros-melodic-gripper-action-controller \
-    libeigen3-dev \
-    python-pymodbus \
-    python-serial \
-    ros-melodic-soem
-
-# Setup ROS workspace directory
-RUN mkdir -p $HOME/catkin_ws/src && \
-    catkin init --workspace $HOME/catkin_ws/ && \
-    cd $HOME/catkin_ws/src
-
-# cmake 3.16
-ADD https://cmake.org/files/v3.16/cmake-3.16.9-Linux-x86_64.sh /opt/cmake-3.16.9-Linux-x86_64.sh
-WORKDIR /opt/
-RUN sudo chmod +x /opt/cmake-3.16.9-Linux-x86_64.sh && \
-    bash -c "yes Y | sudo /opt/cmake-3.16.9-Linux-x86_64.sh" && \
-    bash -c "sudo ln -s /opt/cmake-3.16.9-Linux-x86_64/bin/* /usr/local/bin"
-
-# Set up ROS
-RUN source /opt/ros/melodic/setup.bash && \
-    cd ${HOME}/catkin_ws && \
-    catkin build && \
-    source $HOME/catkin_ws/devel/setup.bash
+    libeigen3-dev && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 # Setup UR Drivers
-RUN source /opt/ros/melodic/setup.bash && \
-    cd ~/catkin_ws && \
+RUN source /opt/ros/noetic/setup.bash && \
+	mkdir -p $HOME/ros_ur_driver/src && \
+    cd ~/ros_ur_driver && \
+    git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver && \
+    git clone -b melodic-devel https://github.com/ros-industrial/universal_robot.git src/universal_robot && \
     sudo apt update -qq && \
     rosdep update --include-eol-distros && \
-    rosdep install --from-paths src --ignore-src -y
+    rosdep install --from-paths src --ignore-src -y && \
+    catkin build && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
+
+# Setup ROS workspace directory
+RUN source /opt/ros/noetic/setup.bash && \
+	mkdir -p $HOME/catkin_ws/src && \
+    catkin init --workspace $HOME/catkin_ws/
 
 # Set up working directory and bashrc
 WORKDIR ${HOME}/catkin_ws/
-RUN echo 'source /opt/ros/melodic/setup.bash' >> $HOME/.bashrc && \
-    echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc
+RUN echo 'source /opt/ros/noetic/setup.bash' >> $HOME/.bashrc && \
+	echo 'source $HOME/ros_ur_driver/devel/setup.bash' >> $HOME/.bashrc && \
+	echo 'source $HOME/catkin_ws/devel/setup.bash' >> $HOME/.bashrc
+    
 CMD /bin/bash
