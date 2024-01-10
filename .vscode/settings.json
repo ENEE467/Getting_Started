@@ -1,0 +1,9 @@
+{
+  "editor.rulers": [
+    80
+  ],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "restructuredtext.experimental": true,
+  "esbonio.sphinx.confDir": "${workspaceFolder}/source"
+}
