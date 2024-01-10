@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
   git \
   wget \
   python3-pip \
-  && pip install sphinx myst-parser
+  && pip install sphinx myst-parser sphinx_rtd_theme
 
 # Add a non-root user
 ARG USERNAME=467-dev
