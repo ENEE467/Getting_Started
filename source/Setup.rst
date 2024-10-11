@@ -1,35 +1,104 @@
-.. Index for environment setup
-   01/09/24
+.. Index for workspace setup
+   10/09/24
    Abhishekh Reddy
 
-Setting Up the Environment
-==========================
+Setting up the Workspace
+=========================
 
-All the lab exercises involving ROS use Docker containers for setting up the
-work environment. This greatly simplifies the setup process since the right
-Ubuntu distribution, installation of ROS and dependent packages all come bundled
-in a single Docker image. Running this image as a container decouples the
-working environment from the host operating system.
+Workspace folder for the lab exercises are hosted on this `GitHub repository <GitHub Repository_>`_
+for reference.
 
-Although Docker can be installed and used on all the mainstream operating
-systems (Linux, Windows and macOS), we strongly recommend using Linux since the
-Lab computers use Linux (Specifically Ubuntu) and ROS provides `Tier 1 support
-<ROS Support Link_>`_ for Ubuntu which guarantees maximum stability and
-functionality.
+For saving the work on GitHub (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you wish to save the work on GitHub, create a new repository on your GitHub account using the
+given repository `as a template <Create Template_>`_.
+
+Clone the workspace
+^^^^^^^^^^^^^^^^^^^
+
+Start a bash terminal by pressing the ``CTRL + ALT + T`` keys. Follow the steps below and run the
+commands in this window.
+
+Download the workspace folder by cloning the git repository in the ``home/`` directory. Replace
+the ``<workspace-name>`` field with a name identifiable to your group before execution.
+
+.. code-block:: bash
+
+  git clone https://github.com/ENEE467/lab-workspace.git ~/<workspace-name>
+
+Also make sure to use the URL of your repository instead if applicable.
+
+Opening the workspace in Visual Studio Code
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use ``Open Folder`` option from the ``File`` menu in VSCode or use the shell command.
+
+.. code-block:: bash
+
+   code ~/<workspace-name>
+
+Then either click ``Reopen in Container`` from the pop-up at the bottom-right as shown in
+:ref:`Figure 1<figure 1>`.
+
+.. _Figure 1:
+.. figure:: images/reopen-1.png
+   :width: 400
+   :align: center
+
+   Figure 1: Opening in Dev Container through pop-up
+
+Or click the remote button at the bottom-left like in :ref:`Figure 2<figure 2>` in case you missed
+the pop-up.
+
+.. _Figure 2:
+.. figure:: images/reopen-2.png
+   :width: 400
+   :align: center
+
+   Figure 2: Opening in Dev Container using remote button
+
+Always select the ``ral-lab`` configuration **when doing the exercises on a lab computer** like in
+:ref:`Figure 3<figure 3>`.
+
+.. _Figure 3:
+.. figure:: images/config-select.png
+   :width: 400
+   :align: center
+
+   Figure 3: Selecting the configuration on lab computer
+
+The container should start and execute the setup script which primarily involves building the
+packages.
+
+Finally, source the terminal before use just for the first time.
+
+.. code-block:: bash
+
+   source ~/.bashrc
 
 .. note::
-   Skip this part on lab computers since it's already done for you. Follow these
-   instructions if you wish to use a personal computer for the lab exercises.
 
-Go through the following steps to set up the environment for lab exercises.
+   A bash terminal should automatically start at the bottom inside VSCode after configuring the
+   container, however if it doesn't, press the ``CTRL + ``` keys or select the ``Terminal`` option
+   from the ``View`` menu.
+
+Next Steps
+^^^^^^^^^^
+
+You can now get started with :ref:`lab 7` and :ref:`lab 8` exercises.
+
+Optional Steps
+^^^^^^^^^^^^^^
 
 .. toctree::
    :maxdepth: 1
    :titlesonly:
 
-   Setup/Installing-Docker
-   Setup/Additional-Setup
-   Setup/Build-Docker-Image
+   Setup/Attach-Shell
+   Setup/PC-Setup
 
-.. LINK REFERENCES -------------------------------------------------------------
-.. _ROS Support Link: https://ros.org/reps/rep-2000.html#humble-hawksbill-may-2022-may-2027
+.. LINK REFERENCES ---------------------------------------------------------------------------------
+
+.. _GitHub Repository: https://github.com/ENEE467/lab-workspace
+.. _Create Template: https://github.com/new?template_name=lab-workspace&template_owner=ENEE467
