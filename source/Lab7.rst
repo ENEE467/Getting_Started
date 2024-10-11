@@ -1,3 +1,4 @@
+.. lab7:
 .. Steps for Lab 7 Exercise
    01/09/24
    Abhishekh Reddy
@@ -5,7 +6,7 @@
 Lab 7
 =====
 
-The purpose of this lab is to familiarize you with the UR3 robot and the tools
+The purpose of this lab is to familiarize you with the UR3e robot and the tools
 we have for making it do useful and/or interesting things. Additionally, you
 will cause the end point of the robot arm to move in both a square and circle in
 a vertical plane and in a horizontal plane. The Horizontal Plane is the plane
@@ -15,281 +16,152 @@ largest possible square that is not in the horizontal plane.
 
 .. note::
 
-   Throughout the course you will first create a successful simulation of the
+   You will first create a successful simulation of the
    desired arm movement in Gazebo. Only after getting this simulation approved
    by the lab staff will you implement it on the actual arm. This is a very
    important safety measure.
 
-Throughout this part of the course, you will use a collection of tools that we
-have provided. These include Docker containers, ROS, MoveIt!, and Gazebo. The
-basics of these tools are explained in the lectures. These tools are already
-loaded on the lab computers.
+Running the simulation
+^^^^^^^^^^^^^^^^^^^^^^
 
-All the tools you need to do this lab are in a Docker container. Docker
-containers are built on images which are built from dockerfiles. Your system in
-the lab has the docker image with all the required tools such as ROS and MoveIt!!
-Installed. You just need to build a container using that image and work inside
-the container. To save the work, you will volume map a directory from the host
-PC to the docker container. Any changes you make in the mapped directory inside
-the container will reflect in the directory in the host PC. To learn more about
-docker visit `docker documentation <Docker Documentation Link_>`_.
+Run the following command to start the simulation for Lab 7 which opens the Gazebo and RViz windows:
 
-**Volume Map:** Docker Containers are destroyed when you exit the container,
-which means all the data will be lost. Volume mapping is used to save the
-important data before destroying the container. A directory from host PC is
-mapped to a directory in the container. Changes made in the mapped directory in
-the docker container is reflected in the host PC. Save the important data in
-the mapped directory inside the container.
+.. code-block:: bash
 
-Steps
-^^^^^
+  ros2 launch lab7 lab7.launch.py
 
-**The commands given in each step below are meant to be copied and pasted in the
-terminal.**
+Split the VSCode terminal either by pressing ``CTRL + SHIFT + 5`` keys or by pressing this button
+shown in TODO:FIGURE
 
-#. Remember to create your own folder on the lab machine so you can save your
-   work. Also, just to be sure, upload your work to your Github account before
-   you leave the lab. Do this in the host PC and not inside the Docker container
-   as ``git push`` and ``git pull`` commands will not work inside the container.
-   This is because your git repositories does not exist inside the docker
-   container.
-
-#. Open a terminal window by pressing ``Ctrl + Alt + T``. In the terminal window,
-   navigate to your folder using cd command. Now, run the following command to
-   clone the repository for Lab 7:
+ADD FIGURE HERE
 
-    .. code-block:: bash
+Now run the executable which moves the robotic arm. This is where you'll be writing your program for
+this exercise.
 
-      git clone https://github.com/ENEE467/lab7.git
+.. code-block:: bash
 
-#. Navigate to the ``lab7/src`` directory in your folder using ``cd`` command.
+  ros2 run lab7 draw_shape --ros-args -p use_sim_time:=true
 
-#. Visual Studio Code is already installed in your systems in the lab.
-   You will use VSCode to write code in this part of the course. To open the
-   source directory in VSCode, run the following command:
+This program runs an examples function by default which:
 
-    ..  code-block:: bash
+- Orients the arm into a position to draw a shape in the vertical plane using a joint-space goal.
 
-      code .
+- Draws a triangle in the vertical plane using a list of waypoints for the end-effector to follow in
+  Cartesian space.
 
-#. Run the following command so that you can see the GUI applications from
-   docker container in the screen of the host PC:
+- Adjusts the end-effector to point upwards using a Cartesian space goal.
 
-    .. code-block:: bash
+- Returns back to initial position by specifying a pre-defined, named position (``up`` in this case).
 
-      xhost +local:docker
+Writing the code
+^^^^^^^^^^^^^^^^
 
-#. Now, you will create a docker container based on the ``ur3e_image`` image
-   which is already on your lab computer and volume map the ``src`` directory
-   in the host PC to the ``src`` directory in the docker container. To do that,
-   enter the following command (Make sure that you are in the ``lab7/src``
-   directory inside the terminal before running this command):
+The source file for this program is located at ``lab7/src/ur3e_move_interface.cpp`` inside the source
+directory of workspace. This is where you'll be working for this exercise.
 
-    .. code-block:: bash
+Go through the code inside ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
+motions observed in the simulation were implemented.
 
-      docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
+Or :ref:`this page <Description of the examples code>` for a detailed description.
 
-#. Install the required dependencies
+.. toctree::
+  :maxdepth: 1
+  :hidden:
 
-    ..  code-block:: bash
+  Lab7/Examples-Code-Desc
 
-      rosdep install --from-paths src --ignore-src -r -y
+Use that to write your own implementations for the following functions within the same source file:
 
-#. Now, you are in the workspace directory in the docker container. This is your
-   catkin workspace. Check that the ``~/catkin_ws/src`` directory contains the
-   files from the ``lab7/src`` directory in your host PC by using the command
-   ``ls ~/catkin_ws/src``. This will list all the files in your ``src`` folder.
-   Now, if everything seems good, the first thing you do is build your catkin
-   packages. To do that, first go to the workspace directory (if you are not
-   already there) using the command ``cd ~/catkin_ws``. To build the workspace,
-   execute the following command:
+- ``UR3eMoveInterface::drawCircleXY``
+- ``UR3eMoveInterface::drawCircleYZ``
+- ``UR3eMoveInterface::drawSquareXY``
+- ``UR3eMoveInterface::drawSquareYZ``
 
-    .. code-block:: bash
+Running the program to draw shapes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-      catkin build
+The command for running the ``draw_shape`` program takes three arguments to define the shape, plane
+and the size. The executable can run repeatedly with a different set of arguments to vary the shape
+and plane.
 
-    After the packages are built, you need to source them so that you can use them
-    in the current terminal window. Run the following command to do that:
+.. code-block:: bash
 
-    .. code-block:: bash
+  ros2 run lab7 draw_shape <shape> <plane> <size> <ros-args>
 
-      source ~/catkin_ws/devel/setup.bash
+<shape>
+  Options: ``circle``, ``square``
 
-    To build projects in ROS, it is advised to follow the specific directory
-    structure. place all you code files in the src folder of the catkin project.
-    see below for reference.
+<plane>
+  Options: ``horizontal`` (XY Plane), ``vertical`` (YZ Plane)
 
-    .. code-block:: text
+<size>
+  Radius if ``<shape>`` is ``circle`` and side length if ``<shape>`` is ``square``
 
-      ┌──────────────────────────┐             ┌──────────────────────────┐
-      │ ProjectDir               │             │ catkin_ws                │
-      │ │                        │             │   │                      │
-      │ └────src                 │             │   └──src                 │
-      │      │                   │             │      │                   │
-      │      ├─catkin_project_1  │             │      ├─catkin_project_1  │
-      │      │                   │             │      │                   │
-      │      ├─catkin_project_2  ├────────────►│      ├─catkin_project_2  │
-      │      │        x          │             │      │        x          │
-      │      │        x          │ Volume Map  │      │        x          │
-      │      │        x          │             │      │        x          │
-      │      │        x          │             │      │        x          │
-      │      └─catkin_project_N  │             │      └─catkin_project_N  │
-      │                          │             │                          │
-      └──────────────────────────┘             └──────────────────────────┘
+<ros-args>
+  Mainly for setting the ``use_sim_time`` parameter to ``true`` for simulation. This isn't needed
+  for the real arm.
 
-    Note: ROS drivers and description packages are located in another folder
-    (``~/ros_ur_driver``) in the Docker image. They are already compiled and
-    sourced in the ``.bashrc`` file. These packages were separated to minimize the
-    build time for your code.
+Example 1:
+  For drawing a circle in the horizontal plane with a radius of 0.25 meters in simulation.
 
-#. Tmux is a tool which is used to split a terminal window into multiple
-   terminals. Tmux is already installed in your docker container. To split the
-   terminal vertically, type ``tmux`` and press ``Enter``, this will open the
-   current terminal with tmux, then click on the terminal you want to split and
-   press ``Ctrl + A`` to select that terminal and press ``V`` to split it
-   vertically. To split the terminal horizontally, click on the terminal you
-   want to split and press ``Ctrl + A`` to select it and then press ``B`` to
-   split it horizontally to do it manually. An example command to split into four
-   terminals using terminal commands is below:
+  .. code-block:: bash
 
-    .. code-block:: bash
+    ros2 run lab7 draw_shape circle horizontal 0.25 --ros-args -p use_sim_time:=true
 
-      tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
+Example 2:
+  For drawing a square in the vertical plane with a side length of 0.2 meters on the real arm.
 
-#. Run the following command to start Gazebo with the UR3e arm in it:
+  .. code-block:: bash
 
-    .. code-block:: bash
+    ros2 run lab7 draw_shape square vertical 0.2
 
-      roslaunch ur3e_setup ur3e_gazebo.launch z_height:=0.77
+.. note::
 
-    ``z_height`` is the height at which the robot is spawned in Gazebo.
+  The program defaults to running the examples function if any of the ``<shape>`` or ``<plane>``
+  arguments are missing or incorrect.
 
-#. In a different terminal window, run the following command to start MoveIt!
-   functionality and RViz:
+  The program defaults to maximum size of 0.45 m radius or :math:`\frac{0.45}{\sqrt{2}}` m side
+  length if the ``<size>`` argument is missing or has a value less than or equal to zero.
 
-    .. code-block:: bash
 
-      roslaunch ur3e_MoveIt!_mrc ur3e_MoveIt!.launch sim:=true
+Controlling the real UR3e arm
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    This also spawns a back wall obstacle that is needed for safety reasons.
-    However, if the wall has to be removed, it can be done by adding
-    ``spawn_wall:=false`` to the end of the command.
+Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_, and then
+booting the arm by pressing the ``Start Robot`` button at the bottom-left part of the screen on the
+Teach Pendant.
 
-#. The MoveIt!_tutorial package has sample code for performing three tasks:
-    * Move the robot to a joint goal
-    * Move the robot to a pose goal
-    * Move the robot from one point to another in a cartesian path
+Then on the lab computer, launch Lab 7 with the ``sim`` argument set to ``false``.
 
-    You can refer to the ``tutorial.cpp`` in the ``MoveIt!_tutorial`` package
-    for the sample code. This sample code uses the helper functions from
-    ``moviet_wrapper`` package. In a new terminal, run the following command
-    to run this sample code:
+.. code-block:: bash
 
-    .. code-block:: bash
+  ros2 launch lab7 lab7.launch.py sim:=false
 
-      rosrun MoveIt!_tutorial tutorial
+This starts the UR ROS Driver which communicates with the real arm instead of Gazebo simulation.
 
-#. You will use these helper functions in your code to move your robot in square
-   and circle trajectories. A package for this lab is provided to you and the
-   name of this package is ``ur3e_trajectory``. Add your code to the files
-   ``square.cpp`` and ``circle.cpp`` for square and circle trajectories.
+The arm shown in RViz sits in the upright position if the ROS driver successfully communicates with
+UR3e. This might take some time.
 
-   Run the following command to run your code for square or circle trajectories:
+Then on the Teach Pendant, go to the ``Program`` section and start the ``ur3e_ros`` program.
 
-    .. code-block:: bash
+Signs that the connection successfully established:
 
-      rosrun ur3e_trajectory square
+  - The terminal from which you launched Lab 7 should print ``Robot connected to reverse
+    interface. Ready to receive control commands``.
 
-    .. note::
+  - Doing a ``ros2 topic list`` should print a lot of new topics.
 
-      Replace square with circle if you want to run your circle code.
+.. caution::
 
-#. You need to calculate the error between the trajectory followed by your robot
-   and the desired trajectory. To do this, you have to record the end effector
-   positions while your robot traces the trajectory. The ``RecordPose.cpp`` file
-   contains the code to record end effector positions at the rate of 2 Hz. It
-   starts recording poses when the boolean parameter ``record_pose`` turns
-   ``true``. You have to set the value of this parameter to ``true`` before
-   executing the trajectory and set it to ``false`` after trajectory executions.
-   Look at the end of ``tutorial.cpp`` file in the ``MoveIt!_tutorial`` package
-   for sample implementation. The boolean parameter ``record_pose`` needs to be
-   loaded to parameter server and the ``RecordPose.cpp`` program will look for
-   that parameter from the parameter server. Run the following command to load
-   the parameter:
+  If there are any warnings or errors in the output, stop immidiately and ask the TA or the lab
+  manager.
 
-    .. code-block:: bash
+Then in another terminal, run the executable to start drawing the shapes. Refer back to
+`this section <Running the program to draw shapes_>`_ for more.
 
-      roslaunch ur3e_trajectory load_params.launch
+.. code-block:: bash
 
-    Edit the string variable ``out_path`` in the ``RecordPose.cpp`` file to the
-    destination where you want to save your end effector poses. After this is
-    done, Run the following command at the same time you run your code for square
-    or circle trajectory:
-
-    .. code-block:: bash
-
-      rosrun ur3e_trajectory RecordPose
-
-    You can use the generated .csv file of the end effector poses to plot the
-    followed trajectory against the ideal trajectory.
-
-#. After you are done with your simulation. You can run your code on the real
-   UR3e arm. Ask one of the Teaching Assistants to help you.
-
-Commands to run your code on real UR3e robot
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The steps for running your code on the real UR3e arm are similar in their
-structure to the ones used to for the Gazebo simulation
-
-#. Start docker container from the ``lab7/src`` folder:
-
-    .. code-block:: bash
-
-      docker run -it --rm --name UR3Container --net=host --ipc=host --pid=host --privileged --env="DISPLAY=$DISPLAY" --volume="$PWD:/home/${USER}/catkin_ws/src" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --volume="/dev:/dev:rw" --ulimit rtprio=99 --ulimit rttime=-1 ur3e_image:latest
-
-#. Build the code, source it, and start tmux:
-
-    .. code-block:: bash
-
-      catkin build
-      source devel/setup.bash
-      tmux new-session \; \split-window -v \; \split-window -h \; \select-pane -t 1 \; \split-window -h
-
-#. Copy the calibrated for each arm kinematics configuration file from the
-   ``Desktop/ENEE467 IMPORTANT`` folder to the ``lab7/src/ur3e_setup/config``
-   folder.
-
-#. Instead of Gazebo launch ROS drivers to connect to the robot arm:
-
-    .. code-block:: bash
-
-      roslaunch ur3e_setup ur3e_bringup_mrc.launch robot_ip:=192.168.77.22 kinematics_config:=$(rospack find ur3e_setup)/config/ur3e_calib.yaml z_height:=0.77
-
-    .. caution::
-
-      If there are any warnings or errors in the output, stop immidately and
-      contact your TA or the lab manager.
-
-#. In one of the tmux termninals run
-
-    .. code-block:: bash
-
-      rostopic list
-
-    to make sure that the connection was established successfuly and you have
-    access to ROS topics.
-
-#. Ask your TA to help launch the ``ur3e_ros program`` on the UR3e tablet. Note,
-   at this point you are controlling the arm from your computer. The terminal with
-   ROS drivers should print the following text ``Robot connected to reverse
-   interface. Ready to receive control commands``.
-
-#. Start MoveIt! with RViz for UR3e:
-
-    .. code-block:: bash
-
-      roslaunch ur3e_moveit_mrc ur3e_moveit.launch
+  ros2 run lab7 draw_shape <shape> <plane> <size>
 
 .. LINK REFERENCES -------------------------------------------------------------
-.. _Docker Documentation Link: https://docs.docker.com/
+.. _Teach Pendant Pic: https://www.universal-robots.com/media/1814258/3pe-tp_productpicture.jpg
