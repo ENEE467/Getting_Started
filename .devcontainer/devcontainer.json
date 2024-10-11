@@ -10,12 +10,16 @@
 	// Set *default* container specific settings.json values on container create.
 	"customizations": {
 		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash"
+			},
 			"extensions": [
 				"ms-python.python",
 				"yzhang.markdown-all-in-one",
 				"redhat.vscode-yaml",
 				"lextudio.restructuredtext",
-				"lextudio.restructuredtext-pack"
+				"lextudio.restructuredtext-pack",
+				"swyddfa.esbonio"
 			]
 		}
 	}
