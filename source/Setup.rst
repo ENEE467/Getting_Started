@@ -38,35 +38,29 @@ Use ``Open Folder`` option from the ``File`` menu in VSCode or use the shell com
 
    code ~/<workspace-name>
 
-Then either click ``Reopen in Container`` from the pop-up at the bottom-right as shown in
-:ref:`Figure 1<figure 1>`.
+Then either click ``Reopen in Container`` from the pop-up at the bottom-right part of the window.
 
-.. _Figure 1:
 .. figure:: images/reopen-1.png
-   :width: 400
+   :width: 450
    :align: center
 
-   Figure 1: Opening in Dev Container through pop-up
+   Opening in Dev Container through pop-up
 
-Or click the remote button at the bottom-left like in :ref:`Figure 2<figure 2>` in case you missed
-the pop-up.
+Or click the remote button at the bottom-left part of the window in case you missed the pop-up.
 
-.. _Figure 2:
 .. figure:: images/reopen-2.png
-   :width: 400
+   :width: 450
    :align: center
 
-   Figure 2: Opening in Dev Container using remote button
+   Opening in Dev Container using remote button
 
-Always select the ``ral-lab`` configuration **when doing the exercises on a lab computer** like in
-:ref:`Figure 3<figure 3>`.
+Always select the ``ral-lab`` configuration **when doing the exercises on a lab computer**.
 
-.. _Figure 3:
 .. figure:: images/config-select.png
-   :width: 400
+   :width: 450
    :align: center
 
-   Figure 3: Selecting the configuration on lab computer
+   Selecting the configuration on lab computer
 
 The container should start and execute the setup script which primarily involves building the
 packages.
@@ -79,9 +73,16 @@ Finally, source the terminal before use just for the first time.
 
 .. note::
 
+
    A bash terminal should automatically start at the bottom inside VSCode after configuring the
    container, however if it doesn't, press the ``CTRL + ``` keys or select the ``Terminal`` option
    from the ``View`` menu.
+
+   .. figure:: images/bash.png
+      :width: 450
+      :align: center
+
+      VSCode Terminal
 
 Next Steps
 ^^^^^^^^^^
