@@ -84,6 +84,7 @@ Here's the same snippet of code from the source file with the comments removed.
       sendEEFTrackRequest(track_request);
 
       // Example 3
+
       RCLCPP_INFO(this->get_logger(), "Example 3");
 
       geometry_msgs::msg::Pose target_pose;
@@ -91,47 +92,25 @@ Here's the same snippet of code from the source file with the comments removed.
       target_pose.position.z += 0.05;
       target_pose.position.y += 0.1;
 
-      /**
-         * Step 2 Continuation - Setting the target orientation relative to current orientation.
-         *
-         * Steps to rotate the end-effector by a certain value:
-         * - Create an empty TF2 Quaternion message
-         * - Set the rotation as desired using roll-pitch-yaw angles
-         * - Apply the rotation by pre-multiplying with the current orientation quaternion
-         * - Convert the TF2 quaternion message to geometry message with the new
-         *   orientation encoded into the target pose.
-         *
-         * In short, TF2 quaternions are used as an intermediate datatype to do
-         * rotation math since geometry quaternions do not have that functionality.
-         */
       tf2::Quaternion desired_rotation_tf;
       desired_rotation_tf.setRPY(0, -M_PI_2, 0);
 
       tf2::Quaternion current_orientation_tf;
       tf2::convert(target_pose.orientation, current_orientation_tf);
-      auto target_orientation_tf = desired_rotation_tf * current_orientation_tf;
 
+      auto target_orientation_tf = desired_rotation_tf * current_orientation_tf;
       tf2::convert(target_orientation_tf, target_pose.orientation);
 
-      // Step 3
       move_group_interface_->setPoseTarget(target_pose);
 
-      // Step 4
       moveit::planning_interface::MoveGroupInterface::Plan motion_plan_pose;
-
-      // Step 5
       bool pose_plan_success {planToPoseGoal(target_pose, motion_plan_pose)};
 
-      // Step 6
       if (pose_plan_success)
          move_group_interface_->move();
 
-      /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-         * EXAMPLE 4 - Moving the robot to a named, predefined position.
-         *
-         * All the predefined positions are defined in lab.srdf from the lab_moveit_config package in
-         * joint space.
-         */
+      // Example 4
+
       moveit::planning_interface::MoveGroupInterface::Plan motion_plan_named_target;
       bool named_target_plan_success {planToNamedTarget("up", motion_plan_named_target)};
 
