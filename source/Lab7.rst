@@ -31,12 +31,16 @@ Run the following command to start the simulation for Lab 7 which opens the Gaze
   ros2 launch lab7 lab7.launch.py
 
 Split the VSCode terminal either by pressing ``CTRL + SHIFT + 5`` keys or by pressing this button
-shown in TODO:FIGURE
+shown below.
 
-ADD FIGURE HERE
+.. figure:: images/bash-split-button.png
+   :width: 450
+   :align: center
 
-Now run the executable which moves the robotic arm. This is where you'll be writing your program for
-this exercise.
+   Split button for the VSCode terminal
+
+In the new terminal, run the executable which moves the robotic arm. This is where you'll be writing
+your program for this exercise.
 
 .. code-block:: bash
 
@@ -127,9 +131,14 @@ Example 2:
 Controlling the real UR3e arm
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_, and then
-booting the arm by pressing the ``Start Robot`` button at the bottom-left part of the screen on the
-Teach Pendant.
+Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_, press the initialize
+button at the bottom-left part of the screen and then press ``START`` to release the brakes.
+
+.. figure:: images/start-robot.png
+   :width: 450
+   :align: center
+
+   Initializing the arm
 
 Then on the lab computer, launch Lab 7 with the ``sim`` argument set to ``false``.
 
@@ -142,7 +151,13 @@ This starts the UR ROS Driver which communicates with the real arm instead of Ga
 The arm shown in RViz sits in the upright position if the ROS driver successfully communicates with
 UR3e. This might take some time.
 
-Then on the Teach Pendant, go to the ``Program`` section and start the ``ur3e_ros`` program.
+Then on the Teach Pendant, start the ``ur3e_ros`` program.
+
+.. figure:: images/start-program.png
+   :width: 450
+   :align: center
+
+   Starting the program to receive commands from lab computer
 
 Signs that the connection successfully established:
 
