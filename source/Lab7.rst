@@ -64,9 +64,8 @@ The source file for this program is located at ``lab7/src/ur3e_move_interface.cp
 directory of workspace. This is where you'll be working for this exercise.
 
 Go through the code inside ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
-motions observed in the simulation were implemented.
-
-Or :ref:`this page <Description of the examples code>` for a detailed description.
+motions observed in the simulation were implemented. Also refer
+:ref:`this page <Description of the examples code>` for a more detailed explanation of the code.
 
 .. toctree::
   :maxdepth: 1
@@ -131,6 +130,8 @@ Example 2:
 Controlling the real UR3e arm
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Make sure to test the program extensively in simulation before executing it on the real arm.
+
 Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_, press the initialize
 button at the bottom-left part of the screen and then press ``START`` to release the brakes.
 
@@ -177,6 +178,9 @@ Then in another terminal, run the executable to start drawing the shapes. Refer 
 .. code-block:: bash
 
   ros2 run lab7 draw_shape <shape> <plane> <size>
+
+If you enabled end-effector tracking, the plots and CSV files of the end-effector positions will be
+saved at the ``output/`` directory of the workspace.
 
 .. LINK REFERENCES -------------------------------------------------------------
 .. _Teach Pendant Pic: https://www.universal-robots.com/media/1814258/3pe-tp_productpicture.jpg
