@@ -117,3 +117,22 @@ Here's the same snippet of code from the source file with the comments removed.
       if (named_target_plan_success)
          move_group_interface_->move();
    }
+
+Each example follows these three steps at a high-level to move the robotic arm.
+
+- Set the target (Either in joint-space or Cartesian space)
+
+- Create a motion plan to the target state
+
+- Execute the motion plan
+
+Beginning part of the code
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: C++
+
+   waitForMoveGroupInterface();
+
+The first part of the code waits for the Move Group Interface node to initialize in the constructor
+before calling any of its methods. It is an empty while loop conditioned to exit when
+the Move Group Interface node initializes.
