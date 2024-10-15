@@ -177,6 +177,107 @@ Execute the motion plan
 Finally, the ``execute()`` method is called to execute the motion plan which is previously generated
 and stored in a variable.
 
-Finally, the ``move()`` method is called to execute the motion plan. MoveIt! automatically stores
-the generated plan internally when the ``plan()`` method is called, so after the motion plan is
-successfully generated, the arm can be moved using this stored plan when ``move()`` is called.
+Example 2
+^^^^^^^^^
+
+This example demonstrates drawing an equilateral triangle with the arm using a list of waypoints for
+the end-effector to follow in Cartesian space.
+
+Set the target
+--------------
+
+.. code-block:: C++
+
+   std::vector<geometry_msgs::msg::Pose> waypoints;
+
+   auto current_pose = move_group_interface_->getCurrentPose().pose;
+   waypoints.push_back(current_pose);
+
+A vector of ``Pose`` messages is used as a list to store the target waypoints.
+
+Then the current pose of the end-effector is added as an initial waypoint. This position will also
+be the center point of the shape, which depends on the arm's position following its previous motion
+(Example 1).
+
+Then the remaning waypoints relative to the first waypoint were added. For a triangle those
+waypoints relative to the first waypoint could be:
+
+A point directly above the center by half the height of the triangle
+:math:`\frac{1}{2} \times \frac{\sqrt{3}}{2} \times a` , where :math:`a` is the side length in meters
+which is hard coded to ``0.25``.
+
+.. code-block:: C++
+
+   double triangle_side {0.25};
+
+   auto pose1 = current_pose;
+   pose1.position.z += std::sqrt(3) * 0.25 * triangle_side;
+   waypoints.push_back(pose1);
+
+A point below the previous point by the triangle height :math:`\frac{\sqrt{3}}{2} \times a` and
+towards the right by half the side length :math:`\frac{a}{2}`.
+
+.. code-block:: C++
+
+  auto pose2 = pose1;
+  pose2.position.z -= std::sqrt(3) * 0.5 * triangle_side;
+  pose2.position.y += 0.5 * triangle_side;
+  waypoints.push_back(pose2);
+
+A point towards the left from the previous point by side length :math:`a`.
+
+.. code-block:: C++
+
+  auto pose3 = pose2;
+  pose3.position.y -= triangle_side;
+  waypoints.push_back(pose3);
+
+A point above by the triangle height :math:`\frac{\sqrt{3}}{2} \times a` and towards the right by
+half the side length :math:`\frac{a}{2}`. (Same as the second point, closing the triangle loop)
+
+.. code-block:: C++
+
+  auto pose4 = pose3;
+  pose4.position.z += std::sqrt(3) * 0.5 * triangle_side;
+  pose4.position.y += 0.5 * triangle_side;
+  waypoints.push_back(pose4);
+
+Finally, a point just below the previous point by half the triangle height
+:math:`\frac{1}{2} \times \frac{\sqrt{3}}{2}`, returning back to the center/initial point.
+
+.. code-block:: C++
+
+  auto pose5 = pose4;
+  pose5.position.z -= std::sqrt(3) * 0.25 * triangle_side;
+  waypoints.push_back(pose5);
+
+.. note::
+
+   As per the ROS convention `REP103 <REP103 Link_>`_ the directions of the coordinate axes are:
+
+   - Positive Z-Axis for up direction
+   - Positive X-Axis for forward direction
+   - Positive Y-Axis for left direction (or right when seen from the front in this lab exercise)
+
+Create a motion plan to the target state
+----------------------------------------
+
+.. code-block:: C++
+
+  moveit_msgs::msg::RobotTrajectory cartesian_trajectory;
+  bool cartesian_plan_success {planCartesianPath(waypoints, cartesian_trajectory)};
+
+Unlike the previous example, Cartesian plan is stored in a different object type.
+``planCartesianPath`` provides abstraction from calling the ``computeCartesianPath`` method in the
+Move Group Interface and time parameterization of the generated motion plan as a post-processing
+step.
+
+Execute the motion plan
+-----------------------
+
+.. code-block:: C++
+
+  if (cartesian_plan_success && track_request_success)
+    move_group_interface_->execute(cartesian_trajectory);
+
+Executes Cartesian motion plan to make the end-effector follow the triangular path.
