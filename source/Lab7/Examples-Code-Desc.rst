@@ -5,11 +5,9 @@
 Description of the examples code
 ================================
 
-TODO: Work in progress.
-
 Here's the same snippet of code from the source file with the comments removed.
 
-.. code-block:: c++
+.. code-block:: C++
 
    void UR3eMoveInterface::examplesMoveIt()
    {
@@ -22,12 +20,12 @@ Here's the same snippet of code from the source file with the comments removed.
 
       std::vector<double> target_joint_positions {M_PI_2, -M_PI_2, M_PI_2, -M_PI, -M_PI_2, 0};
       move_group_interface_->setJointValueTarget(target_joint_positions);
-      moveit::planning_interface::MoveGroupInterface::Plan motion_plan_joints;
 
+      moveit::planning_interface::MoveGroupInterface::Plan motion_plan_joints;
       bool joint_space_plan_success {planToJointSpaceGoal(target_joint_positions, motion_plan_joints)};
 
       if (joint_space_plan_success)
-         move_group_interface_->move();
+         move_group_interface_->execute(motion_plan_joints);
 
       // Example 2
 
@@ -92,30 +90,22 @@ Here's the same snippet of code from the source file with the comments removed.
       target_pose.position.z += 0.05;
       target_pose.position.y += 0.1;
 
-      tf2::Quaternion desired_rotation_tf;
-      desired_rotation_tf.setRPY(0, -M_PI_2, 0);
-
       tf2::Quaternion current_orientation_tf;
       tf2::convert(target_pose.orientation, current_orientation_tf);
+
+      tf2::Quaternion desired_rotation_tf;
+      desired_rotation_tf.setRPY(0, -M_PI_2, 0);
 
       auto target_orientation_tf = desired_rotation_tf * current_orientation_tf;
       tf2::convert(target_orientation_tf, target_pose.orientation);
 
       move_group_interface_->setPoseTarget(target_pose);
-
-      moveit::planning_interface::MoveGroupInterface::Plan motion_plan_pose;
-      bool pose_plan_success {planToPoseGoal(target_pose, motion_plan_pose)};
-
-      if (pose_plan_success)
-         move_group_interface_->move();
+      move_group_interface_->move();
 
       // Example 4
 
-      moveit::planning_interface::MoveGroupInterface::Plan motion_plan_named_target;
-      bool named_target_plan_success {planToNamedTarget("up", motion_plan_named_target)};
-
-      if (named_target_plan_success)
-         move_group_interface_->move();
+      move_group_interface_->setNamedTarget("up");
+      move_group_interface_->move();
    }
 
 Each example follows these three steps at a high-level to move the robotic arm.
