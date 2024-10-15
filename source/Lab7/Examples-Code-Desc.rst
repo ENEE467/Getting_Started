@@ -425,3 +425,8 @@ Execute the motion plan
 .. code-block:: C++
 
    move_group_interface_->move();
+
+.. LINK REFERENCES ---------------------------------------------------------------------------------
+
+.. _REP103 Link: https://www.ros.org/reps/rep-0103.html
+.. _Lab SRDF Link: https://github.com/ENEE467/lab-workspace/blob/main/src/lab_moveit_config/srdf/lab.srdf
