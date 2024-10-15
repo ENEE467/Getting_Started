@@ -281,3 +281,85 @@ Execute the motion plan
     move_group_interface_->execute(cartesian_trajectory);
 
 Executes Cartesian motion plan to make the end-effector follow the triangular path.
+
+Example 3
+^^^^^^^^^
+
+This example demonstrates moving the robotic arm by setting a Cartesian space goal for the
+end-effector.
+
+Set the target
+--------------
+
+Unlike the previous example, only a single ``Pose`` message is used to set the target instead of a
+list. This target pose is initialized with the current end-effector pose to begin with.
+
+.. code-block:: C++
+
+   geometry_msgs::msg::Pose target_pose;
+   target_pose = move_group_interface_->getCurrentPose().pose;
+
+Linear displacements along the Z and Y axes are applied relative to the current position.
+
+.. code-block:: C++
+
+   target_pose.position.z += 0.05;
+   target_pose.position.y += 0.1;
+
+Angular displacements are applied similarly, relative to the current orientation. However, since
+``Pose`` messages store orientation using quaternions, it is not intuitive to set rotation values
+directly.
+
+Instead, angular displacements can be defined using roll-pitch-yaw values and then converted to
+quaternions. While quaternions from ``geometry_msgs`` do not support this conversion, ``TF2``
+quaternions do, and they also provide functionality for converting between these two types.
+
+So first, the current orientation of the end-effector is converted from ``geometry_msgs`` quaternion
+to ``TF2`` quaternion.
+
+.. code-block:: C++
+
+   tf2::Quaternion current_orientation_tf;
+   tf2::convert(target_pose.orientation, current_orientation_tf);
+
+Then, a new ``TF2`` quarternion message is defined with the desired rotations in roll-pitch-yaw.
+
+.. code-block:: C++
+
+   tf2::Quaternion desired_rotation_tf;
+   desired_rotation_tf.setRPY(0, -M_PI_2, 0);
+
+This new rotation is then applied relative to current orientation by pre-multiplying it with the
+current orientation quarternion.
+
+.. code-block:: C++
+
+   auto target_orientation_tf = desired_rotation_tf * current_orientation_tf;
+   tf2::convert(target_orientation_tf, target_pose.orientation);
+
+The resultant ``TF2`` quarternion is then converted back to ``geometry_msgs`` quaternion to set the
+target pose.
+
+.. code-block:: C++
+
+   move_group_interface_->setPoseTarget(target_pose);
+
+Create a motion plan to the target state
+----------------------------------------
+
+This will be automatically handled in the next step.
+
+Execute the motion plan
+-----------------------
+
+.. code-block:: C++
+
+   move_group_interface_->move();
+
+.. tip::
+
+   The ``move()`` method combines both the planning ``plan()`` and execution ``execute()`` steps
+   into a single function call. However, using the ``plan()`` and ``execute()`` methods separately
+   gives more flexibility in many cases.
+
+   This does not work for planning and executing Cartesian paths from Example 2.
