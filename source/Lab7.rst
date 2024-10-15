@@ -181,7 +181,8 @@ Refer back to `this section <Running the program to draw shapes_>`_ for more.
   ros2 run lab7 draw_shape <shape> <plane> <size>
 
 If you enabled end-effector tracking, the plots and CSV files of the end-effector positions will be
-saved at the ``output/`` directory of the workspace.
+saved at the ``output/`` directory of the workspace. Refer
+:ref:`this section <end effector tracking>` for more information.
 
 .. LINK REFERENCES -------------------------------------------------------------
 .. _Teach Pendant Pic: https://www.universal-robots.com/media/1814258/3pe-tp_productpicture.jpg
