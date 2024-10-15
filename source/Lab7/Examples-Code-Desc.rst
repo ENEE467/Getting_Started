@@ -363,3 +363,65 @@ Execute the motion plan
    gives more flexibility in many cases.
 
    This does not work for planning and executing Cartesian paths from Example 2.
+
+Example 4
+^^^^^^^^^
+
+This example demonstrates moving the robotic arm to a predefined position using names.
+
+Set the target
+--------------
+
+.. code-block:: C++
+
+   move_group_interface_->setNamedTarget("up");
+
+The available options for named targets you can set is based on the MoveIt! configuration for the
+robot. More specifically, based on the definitions in the *Semantic Robot Description Format (.srdf)*
+file.
+
+The listed definitions in `Lab's SRDF file <Lab SRDF Link_>`_ are shown in the snippet below.
+
+.. code-block:: xml
+
+   <!--GROUP STATES - Purpose - Define a named state for a particular group, in terms of joint values. -->
+   <!--This is useful to define states like 'folded arms'-->
+
+   <group_state name="home" group="ur_manipulator">
+      <joint name="elbow_joint" value="0" />
+      <joint name="shoulder_lift_joint" value="-1.5707" />
+      <joint name="shoulder_pan_joint" value="0" />
+      <joint name="wrist_1_joint" value="0" />
+      <joint name="wrist_2_joint" value="0" />
+      <joint name="wrist_3_joint" value="0" />
+   </group_state>
+
+   <group_state name="up" group="ur_manipulator">
+      <joint name="elbow_joint" value="0" />
+      <joint name="shoulder_lift_joint" value="-1.5707" />
+      <joint name="shoulder_pan_joint" value="0" />
+      <joint name="wrist_1_joint" value="-1.5707" />
+      <joint name="wrist_2_joint" value="0" />
+      <joint name="wrist_3_joint" value="0" />
+   </group_state>
+
+   <group_state name="test_configuration" group="ur_manipulator">
+      <joint name="elbow_joint" value="1.4" />
+      <joint name="shoulder_lift_joint" value="-1.62" />
+      <joint name="shoulder_pan_joint" value="1.54" />
+      <joint name="wrist_1_joint" value="-1.2" />
+      <joint name="wrist_2_joint" value="-1.6" />
+      <joint name="wrist_3_joint" value="-0.11" />
+   </group_state>
+
+Create a motion plan to the target state
+----------------------------------------
+
+This will be automatically handled in the next step.
+
+Execute the motion plan
+-----------------------
+
+.. code-block:: C++
+
+   move_group_interface_->move();
