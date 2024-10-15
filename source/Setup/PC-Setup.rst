@@ -64,7 +64,7 @@ Then use the ``467-amd-gpu`` configuration when starting the Dev Container.
 Starting the Container
 ^^^^^^^^^^^^^^^^^^^^^^
 
-They're similar to the steps shown in the :ref:`this page <opening the workspace in visual studio code>`.
+They're similar to the steps shown in the :ref:`this page <opening in vscode>`.
 Use any of the ``467-<gpu-config>`` configurations when reopening the workspace folder in container.
 The quickest way to get started is to use the ``467-base`` configuration.
 

@@ -1,4 +1,3 @@
-.. lab7:
 .. Steps for Lab 7 Exercise
    01/09/24
    Abhishekh Reddy
@@ -66,7 +65,7 @@ exercise.
 
 Go through the code inside the ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
 motions observed in the simulation are implemented.  You can also refer
-:ref:`this page <Description of the examples code>` for more detailed explanations of any section of
+:doc:`this page </Lab7/Examples-Code-Desc>` for more detailed explanations of any section of
 the code as needed.
 
 .. toctree::

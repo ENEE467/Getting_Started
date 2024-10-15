@@ -29,6 +29,8 @@ the ``<workspace-name>`` field with a name identifiable to your group.
 
 Also make sure to use the URL of your repository instead if applicable.
 
+.. _opening in vscode:
+
 Opening the workspace in Visual Studio Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -86,7 +88,7 @@ Finally, source the terminal before use just for the first time.
 Next Steps
 ^^^^^^^^^^
 
-You can now get started with :ref:`lab 7` and :ref:`lab 8` exercises.
+You can now get started with :doc:`Lab7` and :doc:`Lab8` exercises.
 
 Optional Steps
 ^^^^^^^^^^^^^^
