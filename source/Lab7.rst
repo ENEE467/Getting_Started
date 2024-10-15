@@ -24,7 +24,7 @@ largest possible square that is not in the horizontal plane.
 Running the simulation
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Run the following command to start the simulation for Lab 7 which opens the Gazebo and RViz windows:
+Launch the Lab 7 simulation which opens both the Gazebo and RViz windows:
 
 .. code-block:: bash
 
@@ -39,33 +39,35 @@ shown below.
 
    Split button for the VSCode terminal
 
-In the new terminal, run the executable which moves the robotic arm. This is where you'll be writing
-your program for this exercise.
+In the new terminal, start the ``draw_shape`` node, which moves the robotic arm.
 
 .. code-block:: bash
 
   ros2 run lab7 draw_shape --ros-args -p use_sim_time:=true
 
-This program runs an examples function by default which:
+This node demonstrates a few example motions with the robotic arm by default, which:
 
-- Orients the arm into a position to draw a shape in the vertical plane using a joint-space goal.
+- Orients the arm into position to draw a shape in the vertical plane using a joint-space goal.
 
-- Draws a triangle in the vertical plane using a list of waypoints for the end-effector to follow in
+- Draws a triangle in the vertical plane by following a list of waypoints for the end-effector in
   Cartesian space.
 
-- Adjusts the end-effector to point upwards using a Cartesian space goal.
+- Adjusts the end-effector to point upwards using a Cartesian-space goal.
 
-- Returns back to initial position by specifying a pre-defined, named position (``up`` in this case).
+- Returns the arm to its initial position by specifying a predefined, named position
+  (up in this case).
 
 Writing the code
 ^^^^^^^^^^^^^^^^
 
-The source file for this program is located at ``lab7/src/ur3e_move_interface.cpp`` inside the source
-directory of workspace. This is where you'll be working for this exercise.
+The source file for the ``draw_shape`` node is located at ``lab7/src/ur3e_move_interface.cpp``
+within the workspace's source directory. This is where you will write your program for this
+exercise.
 
-Go through the code inside ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
-motions observed in the simulation were implemented. Also refer
-:ref:`this page <Description of the examples code>` for a more detailed explanation of the code.
+Go through the code inside the ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
+motions observed in the simulation are implemented.  You can also refer
+:ref:`this page <Description of the examples code>` for more detailed explanations of any section of
+the code as needed.
 
 .. toctree::
   :maxdepth: 1
@@ -73,7 +75,8 @@ motions observed in the simulation were implemented. Also refer
 
   Lab7/Examples-Code-Desc
 
-Use that to write your own implementations for the following functions within the same source file:
+Now, use the reference code to write your own implementations for the following functions within the
+same source file:
 
 - ``UR3eMoveInterface::drawCircleXY``
 - ``UR3eMoveInterface::drawCircleYZ``
@@ -83,9 +86,8 @@ Use that to write your own implementations for the following functions within th
 Running the program to draw shapes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The command for running the ``draw_shape`` program takes three arguments to define the shape, plane
-and the size. The executable can run repeatedly with a different set of arguments to vary the shape
-and plane.
+The command for running the ``draw_shape`` program takes three arguments to define the shape, plane,
+and size. The executable can be run repeatedly with different argument variations.
 
 .. code-block:: bash
 
@@ -132,8 +134,8 @@ Controlling the real UR3e arm
 
 Make sure to test the program extensively in simulation before executing it on the real arm.
 
-Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_, press the initialize
-button at the bottom-left part of the screen and then press ``START`` to release the brakes.
+Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_. Press the initialize
+button at the bottom-left corner of the screen, then press ``START`` to release the brakes.
 
 .. figure:: images/start-robot.png
    :width: 450
@@ -172,8 +174,8 @@ Signs that the connection successfully established:
   If there are any warnings or errors in the output, stop immidiately and ask the TA or the lab
   manager.
 
-Then in another terminal, run the executable to start drawing the shapes. Refer back to
-`this section <Running the program to draw shapes_>`_ for more.
+Then in another terminal, run the ``draw_shape`` node to start drawing the shapes with the arm.
+Refer back to `this section <Running the program to draw shapes_>`_ for more.
 
 .. code-block:: bash
 
