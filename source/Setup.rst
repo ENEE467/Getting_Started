@@ -21,7 +21,7 @@ Start a bash terminal by pressing the ``CTRL + ALT + T`` keys. Follow the steps 
 commands in this window.
 
 Download the workspace folder by cloning the git repository in the ``home/`` directory. Replace
-the ``<workspace-name>`` field with a name identifiable to your group before execution.
+the ``<workspace-name>`` field with a name identifiable to your group.
 
 .. code-block:: bash
 
@@ -46,7 +46,7 @@ Then either click ``Reopen in Container`` from the pop-up at the bottom-right pa
 
    Opening in Dev Container through pop-up
 
-Or click the remote button at the bottom-left part of the window in case you missed the pop-up.
+Or click the remote button at the bottom-left corner of the window in case you missed the pop-up.
 
 .. figure:: images/reopen-2.png
    :width: 450
@@ -73,16 +73,15 @@ Finally, source the terminal before use just for the first time.
 
 .. note::
 
-
-   A bash terminal should automatically start at the bottom inside VSCode after configuring the
-   container, however if it doesn't, press the ``CTRL + ``` keys or select the ``Terminal`` option
-   from the ``View`` menu.
-
    .. figure:: images/bash.png
       :width: 450
       :align: center
 
       VSCode Terminal
+
+   A terminal should automatically start at the bottom inside VSCode after configuring the
+   container, however if it doesn't, press the ``CTRL + ``` keys or select the ``Terminal`` option
+   from the ``View`` menu.
 
 Next Steps
 ^^^^^^^^^^
