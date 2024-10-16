@@ -85,8 +85,8 @@ same source file:
 Running the program to draw shapes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The command for running the ``draw_shape`` program takes three arguments to define the shape, plane,
-and size. The executable can be run repeatedly with different argument variations.
+The command for running the ``draw_shape`` node takes three arguments to define the shape, plane,
+and size. The node can be executed repeatedly with different argument variations.
 
 .. code-block:: bash
 

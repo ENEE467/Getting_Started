@@ -5,6 +5,9 @@
 Description of the examples code
 ================================
 
+The examples demonstrate four different ways of moving the robotic arm using the Move Group
+Interface.
+
 Here's the same snippet of code from the source file with the comments removed.
 
 .. code-block:: C++
@@ -523,10 +526,16 @@ field to ``STOP`` value and resend it to stop tracking. Values in all the other 
 ignored in this case.
 
 When this request is successfully fulfilled by the service, a plot of the end-effector positions
-should pop-up. In addition, a PNG of the plot and a CSV file with raw data will be saved to the
-``output`` directory within the ROS workspace.
+should pop-up. In addition, a PNG of the plot and a CSV file with the raw data will be saved to the
+``output/`` directory within the workspace folder.
+
+Reference
+---------
+
+`Move Group C++ Interface Documentation <MoveIt! Link_>`_
 
 .. LINK REFERENCES ---------------------------------------------------------------------------------
 
 .. _REP103 Link: https://www.ros.org/reps/rep-0103.html
 .. _Lab SRDF Link: https://github.com/ENEE467/lab-workspace/blob/main/src/lab_moveit_config/srdf/lab.srdf
+.. _MoveIt! Link: https://moveit.picknik.ai/main/doc/examples/move_group_interface/move_group_interface_tutorial.html

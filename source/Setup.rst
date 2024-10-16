@@ -5,14 +5,14 @@
 Setting up the Workspace
 =========================
 
-Workspace folder for the lab exercises are hosted on this `GitHub repository <GitHub Repository_>`_
+Workspace folder for the lab exercises is hosted on this `GitHub repository <GitHub Repository_>`_
 for reference.
 
 For saving the work on GitHub (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you wish to save the work on GitHub, create a new repository on your GitHub account using the
-given repository `as a template <Create Template_>`_.
+If you wish to save the work on GitHub, `create a new repository <Create Repository Template_>`_ on
+your GitHub account using this repository as a template.
 
 Clone the workspace
 ^^^^^^^^^^^^^^^^^^^
@@ -103,4 +103,4 @@ Optional Steps
 .. LINK REFERENCES ---------------------------------------------------------------------------------
 
 .. _GitHub Repository: https://github.com/ENEE467/lab-workspace
-.. _Create Template: https://github.com/new?template_name=lab-workspace&template_owner=ENEE467
+.. _Create Repository Template: https://github.com/new?template_name=lab-workspace&template_owner=ENEE467
