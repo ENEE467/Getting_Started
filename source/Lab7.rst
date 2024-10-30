@@ -53,6 +53,18 @@ Write the code for implementing the following methods in the source file.
 - ``findCovarianceMatrix()``
 - ``findLeastSquaresErrorVector()``
 
+In the VSCode terminal, navigate to the workspace root directory if you are in a different directory.
+
+.. code-block:: bash
+
+   cd $ROS_WS
+
+Build the packages and source the workspace to apply the new changes.
+
+.. code-block:: bash
+
+   colcon build && source install/setup.bash
+
 Performing the calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
