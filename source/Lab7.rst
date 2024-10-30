@@ -105,7 +105,8 @@ Now begin the command interface in this terminal window to send commands to the 
 
 Follow the terminal instructions to complete the steps below:
 
-- Capture at least 15 measurements for calibration.
+- Capture at least 15 measurements for calibration. Move the robot to different poses using the
+  `Freedrive mode <Freedrive Mode_>`_.
 
 - Send the ``calibrate`` command to initiate calibration.
 
@@ -135,3 +136,4 @@ Save the verification results using the ``save`` command again. The output will 
 
 .. LINK REFERENCES ---------------------------------------------------------------------------------
 .. _Teach Pendant Pic: https://www.universal-robots.com/media/1814258/3pe-tp_productpicture.jpg
+.. _Freedrive Mode: https://myur.universal-robots.com/manuals/content/SW_5_14/Documentation%20Menu/Software/Introduction/Freedrive
