@@ -115,12 +115,16 @@ Now begin the command interface in this terminal window to send commands to the 
 
    Command interface running in an external shell window
 
-Follow the terminal instructions to complete the steps below:
+Perform these steps for Hand-eye calibration:
 
-- Capture at least 15 measurements for calibration. Move the robot to different poses using the
-  `Freedrive mode <Freedrive Mode_>`_.
+- Move the robot by hand using `Freedrive mode <Freedrive Mode_>`_ to bring the marker attached to
+  the robot into the camera view.
 
-- Send the ``calibrate`` command to initiate calibration.
+- Set the robot to a specific pose, then press ``ENTER`` in the terminal to capture a measurement.
+
+- Change the pose and capture a new measurement. Repeat this process 15 times.
+
+- Run the ``calibrate`` command to initiate calibration.
 
 In RViz, two new frames named ``camera`` and ``marker_n`` should appear in the left viewport,
 representing the camera's and marker's poses, as shown in the figure below.
@@ -140,8 +144,9 @@ representing the camera's and marker's poses, as shown in the figure below.
 If the results look correct, save the calibration results using the ``save`` command before
 proceeding to verify the calibration.
 
-Capture at least 15 additional measurements and then use the ``verify`` command to calculate the
-error vectors and covariance matrix with the previously implemented methods.
+Capture at least 15 additional measurements in the same way as for calibration, then use the
+``verify`` command to calculate the error vectors and covariance matrix using the previously
+implemented methods.
 
 Save the verification results using the ``save`` command again. The output will be stored in the
 ``output/lab7/`` directory within the ROS workspace.
