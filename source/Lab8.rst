@@ -59,11 +59,10 @@ This node demonstrates a few example motions with the robotic arm by default, wh
 Writing the code
 ^^^^^^^^^^^^^^^^
 
-The source file for the ``draw_shape`` node is located at ``lab8/src/ur3e_move_interface.cpp``
-within the workspace's source directory. This is where you will write your program for this
-exercise.
+The source file for this lab exercise is located at ``lab8/src/lab8.cpp`` within the workspace's
+source directory. This is where you will write the code for this exercise.
 
-Go through the code inside the ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
+Go through the code inside the ``examples.cpp`` file within the same folder to understand how the
 motions observed in the simulation are implemented.  You can also refer
 :doc:`this page </Lab8/Examples-Code-Desc>` for more detailed explanations of any section of
 the code as needed.
@@ -74,8 +73,8 @@ the code as needed.
 
   Lab8/Examples-Code-Desc
 
-Now, use the reference code to write your own implementations for the following functions within the
-same source file:
+Now, use the reference code to write your own implementations for the following functions in the
+``lab8.cpp`` source file:
 
 - ``UR3eMoveInterface::drawCircleXY``
 - ``UR3eMoveInterface::drawCircleYZ``
