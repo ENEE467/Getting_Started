@@ -82,6 +82,12 @@ same source file:
 - ``UR3eMoveInterface::drawSquareXY``
 - ``UR3eMoveInterface::drawSquareYZ``
 
+Build the packages and source the workspace after writing the code.
+
+.. code-block:: bash
+
+  cd $ROS_WS && colcon build && source install/setup.bash
+
 Running the program to draw shapes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
