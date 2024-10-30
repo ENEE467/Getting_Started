@@ -65,23 +65,23 @@ Here's the same snippet of code from the source file with the comments removed.
       moveit_msgs::msg::RobotTrajectory cartesian_trajectory;
       bool cartesian_plan_success {planCartesianPath(waypoints, cartesian_trajectory)};
 
-      auto track_request {std::make_shared<lab7::srv::TrackRequest::Request>()};
+      auto track_request {std::make_shared<lab8::srv::TrackRequest::Request>()};
 
       track_request->tf_root_frame_name = move_group_interface_->getPlanningFrame();
       track_request->tf_tip_frame_name = move_group_interface_->getEndEffectorLink();
 
       track_request->plot_title = "Example: A Triangle in the vertical plane";
-      track_request->plot_axis_x = lab7::srv::TrackRequest::Request::Y_AXIS;
-      track_request->plot_axis_y = lab7::srv::TrackRequest::Request::Z_AXIS;
+      track_request->plot_axis_x = lab8::srv::TrackRequest::Request::Y_AXIS;
+      track_request->plot_axis_y = lab8::srv::TrackRequest::Request::Z_AXIS;
 
-      track_request->status = lab7::srv::TrackRequest::Request::START;
+      track_request->status = lab8::srv::TrackRequest::Request::START;
 
       bool track_request_success {sendEEFTrackRequest(track_request)};
 
       if (cartesian_plan_success && track_request_success)
          move_group_interface_->execute(cartesian_trajectory);
 
-      track_request->status = lab7::srv::TrackRequest::Request::STOP;
+      track_request->status = lab8::srv::TrackRequest::Request::STOP;
       sendEEFTrackRequest(track_request);
 
       // Example 3
@@ -437,7 +437,7 @@ Using the end-effector tracking service (In Example 2)
 This section explains how to use this service to plot the resulting shape drawn by the robot. This
 data can be included in your lab report.
 
-The service automatically starts by default when you launch the Lab 7
+The service automatically starts by default when you launch the Lab 8
 (in both simulation and on the real arm) unless the ``track_eef`` launch argument is set to
 ``false``.
 
@@ -481,16 +481,16 @@ Example service request to start tracking
 
 .. code-block:: C++
 
-   auto track_request {std::make_shared<lab7::srv::TrackRequest::Request>()};
+   auto track_request {std::make_shared<lab8::srv::TrackRequest::Request>()};
 
    track_request->tf_root_frame_name = move_group_interface_->getPlanningFrame();
    track_request->tf_tip_frame_name = move_group_interface_->getEndEffectorLink();
 
    track_request->plot_title = "Example: A Triangle in the vertical plane";
-   track_request->plot_axis_x = lab7::srv::TrackRequest::Request::Y_AXIS;
-   track_request->plot_axis_y = lab7::srv::TrackRequest::Request::Z_AXIS;
+   track_request->plot_axis_x = lab8::srv::TrackRequest::Request::Y_AXIS;
+   track_request->plot_axis_y = lab8::srv::TrackRequest::Request::Z_AXIS;
 
-   track_request->status = lab7::srv::TrackRequest::Request::START;
+   track_request->status = lab8::srv::TrackRequest::Request::START;
 
    bool track_request_success {sendEEFTrackRequest(track_request)};
 
@@ -518,7 +518,7 @@ Example service request to stop tracking
 
 .. code-block:: C++
 
-   track_request->status = lab7::srv::TrackRequest::Request::STOP;
+   track_request->status = lab8::srv::TrackRequest::Request::STOP;
    bool track_request_success {sendEEFTrackRequest(track_request)};
 
 You can reuse the same request message used to start tracking the poses. Just modify the ``status``

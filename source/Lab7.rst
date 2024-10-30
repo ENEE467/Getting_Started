@@ -1,140 +1,64 @@
-.. Steps for Lab 7 Exercise
+.. Steps for Lab 7 exercise
    01/09/24
    Abhishekh Reddy
 
 Lab 7
 =====
 
-The purpose of this lab is to familiarize you with the UR3e robot and the tools
-we have for making it do useful and/or interesting things. Additionally, you
-will cause the end point of the robot arm to move in both a square and circle in
-a vertical plane and in a horizontal plane. The Horizontal Plane is the plane
-perpendicular to Z-Axis and the Vertical plane is the plane perpendicular to
-either X or Y axes. Next, you will cause the end point of the arm to move in the
-largest possible square that is not in the horizontal plane.
+The purpose of this experiment is to perform Hand-eye Calibration for the camera and arm. In order
+to use the camera to measure the position of objects and to use that information as feedback for the
+control of the arm, it is necessary to know the pose of the camera in the World coordinate system.
+That pose is determined by 6 parameters which must be measured. As with many complicated
+measurements, it is unreasonable to believe that a single measurement is accurate enough. The
+standard approach is to repeat the measurements a reasonable number of times; determine a
+least-squares fit for the parameters; then check the fit by means of a separate set of measurements.
+If the result of the test is not good enough, make more (ideally more accurate) measurements.
 
-.. note::
+Once you have calibrated the camera, it is interesting to check the accuracy of the largest square
+you found for the end effector in the previous lab. You only specified the corners. MoveIt
+determined the path and the trajectory. If you repeat them and observe the result with the camera,
+you can compare the path and trajectory as measured by the camera with that computed from the joint
+angles.
 
-   You will first create a successful simulation of the
-   desired arm movement in Gazebo. Only after getting this simulation approved
-   by the lab staff will you implement it on the actual arm. This is a very
-   important safety measure.
-
-Running the simulation
-^^^^^^^^^^^^^^^^^^^^^^
-
-Launch the Lab 7 simulation which opens both the Gazebo and RViz windows:
-
-.. code-block:: bash
-
-  ros2 launch lab7 lab7.launch.py
-
-Split the VSCode terminal either by pressing ``CTRL + SHIFT + 5`` keys or by pressing this button
-shown below.
-
-.. figure:: images/bash-split-button.png
-   :width: 450
-   :align: center
-
-   Split button for the VSCode terminal
-
-In the new terminal, start the ``draw_shape`` node, which moves the robotic arm.
-
-.. code-block:: bash
-
-  ros2 run lab7 draw_shape --ros-args -p use_sim_time:=true
-
-This node demonstrates a few example motions with the robotic arm by default, which:
-
-- Orients the arm into position to draw a shape in the vertical plane using a joint-space goal.
-
-- Draws a triangle in the vertical plane by following a list of waypoints for the end-effector in
-  Cartesian space.
-
-- Adjusts the end-effector to point upwards using a Cartesian-space goal.
-
-- Returns the arm to its initial position by specifying a predefined, named position
-  (up in this case).
+The first thing you have to do is make the first set of measurements for the calibration and record
+them. Be sure to collect measurements from a broad range of positions, including some extreme ones.
 
 Writing the code
 ^^^^^^^^^^^^^^^^
 
-The source file for the ``draw_shape`` node is located at ``lab7/src/ur3e_move_interface.cpp``
-within the workspace's source directory. This is where you will write your program for this
-exercise.
+Verifying the calibration result involves these steps:
 
-Go through the code inside the ``UR3eMoveInterface::examplesMoveIt`` function to understand how the
-motions observed in the simulation are implemented.  You can also refer
-:doc:`this page </Lab7/Examples-Code-Desc>` for more detailed explanations of any section of
-the code as needed.
+   - Finding the mean error vector
+   - Finding the covariance matrix
+   - Finding the least squares error vector
 
-.. toctree::
-  :maxdepth: 1
-  :hidden:
+The implementations for these functions must be provided in the ``lab7.cpp`` source file which is
+located inside the ``src/`` directory of the ``lab7`` package.
 
-  Lab7/Examples-Code-Desc
+.. code-block:: text
 
-Now, use the reference code to write your own implementations for the following functions within the
-same source file:
+   <workspace-folder>/
+   ├── build/
+   ├── install/
+   ├── log/
+   └── src/
+      ├── lab7/
+      │   └── src/
+      │       └── lab7.cpp  <--- This file
+      └── lab8/
 
-- ``UR3eMoveInterface::drawCircleXY``
-- ``UR3eMoveInterface::drawCircleYZ``
-- ``UR3eMoveInterface::drawSquareXY``
-- ``UR3eMoveInterface::drawSquareYZ``
+Write the code for implementing the following methods in the source file.
 
-Running the program to draw shapes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- ``findMeanErrorVector()``
+- ``findCovarianceMatrix()``
+- ``findLeastSquaresErrorVector()``
 
-The command for running the ``draw_shape`` node takes three arguments to define the shape, plane,
-and size. The node can be executed repeatedly with different argument variations.
+Performing the calibration
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
-
-  ros2 run lab7 draw_shape <shape> <plane> <size> <ros-args>
-
-<shape>
-  Options: ``circle``, ``square``
-
-<plane>
-  Options: ``horizontal`` (XY Plane), ``vertical`` (YZ Plane)
-
-<size>
-  Radius if ``<shape>`` is ``circle`` and side length if ``<shape>`` is ``square``
-
-<ros-args>
-  Mainly for setting the ``use_sim_time`` parameter to ``true`` for simulation. This isn't needed
-  for the real arm.
-
-Example 1:
-  For drawing a circle in the horizontal plane with a radius of 0.25 meters in simulation.
-
-  .. code-block:: bash
-
-    ros2 run lab7 draw_shape circle horizontal 0.25 --ros-args -p use_sim_time:=true
-
-Example 2:
-  For drawing a square in the vertical plane with a side length of 0.2 meters on the real arm.
-
-  .. code-block:: bash
-
-    ros2 run lab7 draw_shape square vertical 0.2
-
-.. note::
-
-  The program defaults to running the examples function if any of the ``<shape>`` or ``<plane>``
-  arguments are missing or incorrect.
-
-  The program defaults to maximum size of 0.45 m radius or :math:`\frac{0.45}{\sqrt{2}}` m side
-  length if the ``<size>`` argument is missing or has a value less than or equal to zero.
-
-
-Controlling the real UR3e arm
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Make sure to test the program extensively in simulation before executing it on the real arm.
-
-Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_. Press the initialize
-button at the bottom-left corner of the screen, then press ``START`` to release the brakes.
+Start the robot by turning on the `Teach Pendant <Teach Pendant Pic_>`_. Open the Initialization
+window by pressing the button at the bottom-left corner of the screen. In the Initialization window,
+press ``ON`` and then ``START`` to release the brakes.
 
 .. figure:: images/start-robot.png
    :width: 450
@@ -142,47 +66,72 @@ button at the bottom-left corner of the screen, then press ``START`` to release 
 
    Initializing the arm
 
-Then on the lab computer, launch Lab 7 with the ``sim`` argument set to ``false``.
+On the lab computer, use the VSCode terminal to execute the launch file for this Lab exericise to
+run the calibration stack. Replace ``<number>`` with the number posted on your lab table when
+entering the command.
 
 .. code-block:: bash
 
-  ros2 launch lab7 lab7.launch.py sim:=false
+   ros2 launch lab7 lab7.launch.py table:=<number>
 
-This starts the UR ROS Driver which communicates with the real arm instead of Gazebo simulation.
+This will start an RViz window displaying the robot and camera views side by side. The left view
+replicates the real arm's pose, showing the relevant transform frames. The right view displays the
+camera feed, highlighting the marker when detected.
 
-The arm shown in RViz sits in the upright position if the ROS driver successfully communicates with
-UR3e. This might take some time.
-
-Then on the Teach Pendant, start the ``ur3e_ros`` program.
-
-.. figure:: images/start-program.png
+.. figure:: images/rviz-before-calib.png
    :width: 450
    :align: center
 
-   Starting the program to receive commands from lab computer
+   RViz window after executing the launch file
 
-Signs that the connection successfully established:
-
-  - The terminal from which you launched Lab 7 should print ``Robot connected to reverse
-    interface. Ready to receive control commands``.
-
-  - Doing a ``ros2 topic list`` should print a lot of new topics.
-
-.. caution::
-
-  If there are any warnings or errors in the output, stop immidiately and ask the TA or the lab
-  manager.
-
-Then in another terminal, run the ``draw_shape`` node to start drawing the shapes with the arm.
-Refer back to `this section <Running the program to draw shapes_>`_ for more.
+Start a terminal window outside VSCode by pressing ``CTRL + ALT + T`` keys, and access the container
+shell. :doc:`This page </Setup/Attach-Shell>` explains more about this step in detail.
 
 .. code-block:: bash
 
-  ros2 run lab7 draw_shape <shape> <plane> <size>
+   docker exec -it -u 467-terp <workspace-name> bash
 
-If you enabled end-effector tracking, the plots and CSV files of the end-effector positions will be
-saved at the ``output/`` directory of the workspace. Refer
-:ref:`this section <end effector tracking>` for more information.
+Now begin the command interface in this terminal window to send commands to the calibration node.
 
-.. LINK REFERENCES -------------------------------------------------------------
+.. code-block:: bash
+
+   ros2 run lab7 command_interface
+
+.. figure:: images/lab7-command-interface.png
+   :width: 450
+   :align: center
+
+   Command interface running in an external shell window
+
+Follow the terminal instructions to complete the steps below:
+
+- Capture at least 15 measurements for calibration.
+
+- Send the ``calibrate`` command to initiate calibration.
+
+In RViz, two new frames named ``camera`` and ``marker_n`` should appear in the left viewport,
+representing the camera's and marker's poses, as shown in the figure below.
+
+.. figure:: images/rviz-after-calib.png
+   :width: 450
+   :align: center
+
+   RViz window after Hand-eye calibration
+
+.. note::
+
+   If the camera frame is positioned or oriented incorrectly, reset the measurements and perform the
+   calibration again. There must be a significant variation between the end-effector poses while
+   capturing measurements.
+
+If the results look correct, save the calibration results using the ``save`` command before
+proceeding to verify the calibration.
+
+Capture at least 15 additional measurements and then use the ``verify`` command to calculate the
+error vectors and covariance matrix with the previously implemented methods.
+
+Save the verification results using the ``save`` command again. The output will be stored in the
+``output/lab7/`` directory within the ROS workspace.
+
+.. LINK REFERENCES ---------------------------------------------------------------------------------
 .. _Teach Pendant Pic: https://www.universal-robots.com/media/1814258/3pe-tp_productpicture.jpg
