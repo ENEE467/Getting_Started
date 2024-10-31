@@ -28,42 +28,22 @@ Writing the code
 
 Verifying the calibration result involves these steps:
 
-   - Finding the mean error vector
-   - Finding the covariance matrix
-   - Finding the least squares error vector
+- Finding the mean error vector
+- Finding the covariance matrix
+- Finding the least squares error vector
 
-The implementations for these functions must be provided in the ``lab7.cpp`` source file which is
-located inside the ``src/`` directory of the ``lab7`` package.
-
-.. code-block:: text
-
-   <workspace-folder>/
-   ├── build/
-   ├── install/
-   ├── log/
-   └── src/
-      ├── lab7/
-      │   └── src/
-      │       └── lab7.cpp  <--- This file
-      └── lab8/
-
-Write the code for implementing the following methods in the source file.
+Implement these functions in the ``lab7/src/lab7.cpp`` source file located within the workspace
+source directory.
 
 - ``findMeanErrorVector()``
 - ``findCovarianceMatrix()``
 - ``findLeastSquaresErrorVector()``
 
-In the VSCode terminal, navigate to the workspace root directory if you are in a different directory.
+Always build the packages and source the workspace after modifying the source code.
 
 .. code-block:: bash
 
-   cd $ROS_WS
-
-Build the packages and source the workspace to apply the new changes.
-
-.. code-block:: bash
-
-   colcon build && source install/setup.bash
+   cd $ROS_WS && colcon build && source install/setup.bash
 
 Performing the calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
