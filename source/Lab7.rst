@@ -8,14 +8,14 @@ Lab 7
 The purpose of this experiment is to perform Hand-eye Calibration for the camera and arm. In order
 to use the camera to measure the position of objects and to use that information as feedback for the
 control of the arm, it is necessary to know the pose of the camera in the World coordinate system.
-That pose is determined by 6 parameters which must be measured. As with many complicated
+That pose is determined by 7 parameters which must be measured. As with many complicated
 measurements, it is unreasonable to believe that a single measurement is accurate enough. The
 standard approach is to repeat the measurements a reasonable number of times; determine a
 least-squares fit for the parameters; then check the fit by means of a separate set of measurements.
 If the result of the test is not good enough, make more (ideally more accurate) measurements.
 
 Once you have calibrated the camera, it is interesting to check the accuracy of the largest square
-you found for the end effector in the previous lab. You only specified the corners. MoveIt
+you found for the end effector in the next lab. You only specified the corners. MoveIt
 determined the path and the trajectory. If you repeat them and observe the result with the camera,
 you can compare the path and trajectory as measured by the camera with that computed from the joint
 angles.
