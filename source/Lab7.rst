@@ -95,18 +95,25 @@ Now begin the command interface in this terminal window to send commands to the 
 
    Command interface running in an external shell window
 
-Perform these steps for Hand-eye calibration:
+Press and hold the **Freedrive** button on the Teach Pendant with your index finger to freely move
+and adjust the robot by hand. Location of this button is shown in the figure below.
 
-- Move the robot by hand using `Freedrive mode <Freedrive Mode_>`_ to bring the marker attached to
-  the robot into the camera view.
+.. figure:: images/freedrive-button.png
+   :width: 225
+   :align: center
 
-- Set the robot to a specific pose, then press ``ENTER`` in the terminal to capture a measurement.
+   Freedrive button on the Teach Pendant
 
-- Change the pose and capture a new measurement. Repeat this process 15 times.
+Move the robot by hand to bring the marker attached to the robot into the camera view.
 
-- Run the ``calibrate`` command to initiate calibration.
+Set the robot to a specific pose, then press ``ENTER`` in the terminal to capture a measurement.
 
-In RViz, two new frames named ``camera`` and ``marker_n`` should appear in the left viewport,
+Adjust the robot to a new pose and capture another measurement. Repeat this process 15 times,
+ensuring the marker remains visible to the camera.
+
+Run the ``calibrate`` command to initiate calibration.
+
+In RViz, two new frames named ``camera`` and ``marker_id`` should appear in the left viewport,
 representing the camera's and marker's poses, as shown in the figure below.
 
 .. figure:: images/rviz-after-calib.png
@@ -117,7 +124,7 @@ representing the camera's and marker's poses, as shown in the figure below.
 
 .. note::
 
-   If the camera frame is positioned or oriented incorrectly, reset the measurements and perform the
+   If the camera and marker frames are positioned incorrectly, reset the measurements and perform the
    calibration again. There must be a significant variation between the end-effector poses while
    capturing measurements.
 
