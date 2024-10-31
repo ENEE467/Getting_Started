@@ -246,7 +246,7 @@ half the side length :math:`\frac{a}{2}`. (Same as the second point, closing the
   waypoints.push_back(pose4);
 
 Finally, a point just below the previous point by half the triangle height
-:math:`\frac{1}{2} \times \frac{\sqrt{3}}{2}`, returning back to the center/initial point.
+:math:`\frac{1}{2} \times \frac{\sqrt{3}}{2} \times a`, returning back to the center/initial point.
 
 .. code-block:: C++
 
@@ -527,7 +527,7 @@ ignored in this case.
 
 When this request is successfully fulfilled by the service, a plot of the end-effector positions
 should pop-up. In addition, a PNG of the plot and a CSV file with the raw data will be saved to the
-``output/`` directory within the workspace folder.
+``output/lab8/`` directory within the workspace folder.
 
 Reference
 ---------

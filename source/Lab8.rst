@@ -91,7 +91,7 @@ Running the program to draw shapes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The command for running the ``draw_shape`` node takes three arguments to define the shape, plane,
-and size. The node can be executed repeatedly with different argument variations.
+and size. The node can be executed repeatedly with different argument combinations.
 
 .. code-block:: bash
 
@@ -136,8 +136,9 @@ Example 2:
 Controlling the real UR3e arm
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Start the robot by first turning on the `Teach Pendant <Teach Pendant Pic_>`_. Press the initialize
-button at the bottom-left corner of the screen, then press ``START`` to release the brakes.
+Start the robot by turning on the `Teach Pendant <Teach Pendant Pic_>`_. Open the Initialization
+window by pressing the button at the bottom-left corner of the screen. In the Initialization window,
+press ``ON`` and then ``START`` to release the brakes.
 
 .. figure:: images/start-robot.png
    :width: 450
@@ -184,7 +185,7 @@ Refer back to `this section <Running the program to draw shapes_>`_ for more.
   ros2 run lab8 draw_shape <shape> <plane> <size>
 
 If you enabled end-effector tracking, the plots and CSV files of the end-effector positions will be
-saved at the ``output/`` directory of the workspace. Refer
+saved at the ``output/lab8/`` directory of the workspace. Refer
 :ref:`this section <end effector tracking>` for more information.
 
 .. LINK REFERENCES ---------------------------------------------------------------------------------
