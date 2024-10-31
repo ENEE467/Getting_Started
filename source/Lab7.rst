@@ -39,7 +39,7 @@ source directory.
 - ``findCovarianceMatrix()``
 - ``findLeastSquaresErrorVector()``
 
-Always build the packages and source the workspace after modifying the source code.
+Build the packages and source the workspace after modifying the source code.
 
 .. code-block:: bash
 
