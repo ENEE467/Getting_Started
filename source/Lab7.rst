@@ -36,14 +36,14 @@ Verifying the calibration result involves these steps:
 
 - Finding the mean error vector
 - Finding the covariance matrix
-- Finding the least squares error vector
+- Finding the sum of squared errors vector
 
 Implement these functions in the ``lab7/src/lab7.cpp`` source file located within the workspace
 source directory. Refer :doc:`this page </Lab7/Coding-Tips>` at any point for tips.
 
 - ``findMeanErrorVector()``
 - ``findCovarianceMatrix()``
-- ``findLeastSquaresErrorVector()``
+- ``findSumOfSquaredErrorsVector()``
 
 Build the packages and source the workspace after modifying the source code.
 
