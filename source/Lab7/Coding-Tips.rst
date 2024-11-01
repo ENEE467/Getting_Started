@@ -26,11 +26,16 @@ orientation quaternion.
 
     Eigen::Vector<double, 7> vector {x, y, z, q_x, q_y, q_z, q_w};
 
-Math operations like additions, subtractions, multiplication/division with scalar values can be done
+Vector math like additions, subtractions, multiplication/division with scalar values can be done
 directly using normal C++ operators like ``+``, ``*``, ``/``.
 
-For squaring the vector elements, access the array object using ``array()`` method and then use its
-coefficient-wise ``square()`` method.
+The library supports element-wise operations on ``Eigen::Array`` objects but not on ``Eigen::Vector``
+types. To perform element-wise operations on ``Eigen::Vector`` objects, you can use the ``array()``
+method to obtain an ``Eigen::Array`` wrapper to apply operations on. The entire list of available
+operations can be found `here <Coefficient Wise Operators_>`_.
+
+For example, performing an element-wise square operation on a vector using the ``square()`` method
+looks like this:
 
 .. math::
 
@@ -40,10 +45,8 @@ coefficient-wise ``square()`` method.
 
     auto vector_squared = Eigen::Vector<double, 7>(vector.array().square());
 
-.. note::
-
-    The returned value from ``square()`` method is not an ``Eigen::Vector`` object. It either needs
-    to be casted to that type or used as a parameter for initializing a new object of that type.
+The returned value from ``square()`` method is not an ``Eigen::Vector`` object. It either needs
+to be casted back to that type or used as a parameter for initializing a new object of that type.
 
 For finding the transpose of the vector, simply use the ``transpose()`` method.
 
@@ -77,7 +80,7 @@ A single error vector when indexed from this list would be:
 
 .. math::
 
-    e_i = \begin{bmatrix} x_i \\ y_i \\ z_i \\ q_{xi} \\ q_{yi} \\ q_{zi} \\ q_{wi} \end{bmatrix}
+    e_i = \begin{bmatrix} x_i \\ y_i \\ z_i \\ {q_x}_i \\ {q_y}_i \\ {q_z}_i \\ {q_w}_i \end{bmatrix}
 
 .. code-block:: C++
 
@@ -93,8 +96,48 @@ For accessing all the error vectors from the list, a simple range-based ``for`` 
 
     }
 
+Formulas for reference
+----------------------
+
+Sample Mean
+^^^^^^^^^^^
+
+.. math::
+
+    \bar{e} = \frac{1}{n} \sum_{i=1}^{n} e_i
+
+:math:`n` is the number of measurements.
+
+Sample Covariance
+^^^^^^^^^^^^^^^^^
+
+.. math::
+
+    S = \frac{1}{n - 1} \sum_{i=1}^{n} (e_i - \bar{e}) (e_i - \bar{e})^T
+
+:math:`e_i - \bar{e}` is the deviation of an error from sample mean error.
+
+Sum of Squared Errors
+^^^^^^^^^^^^^^^^^^^^^
+
+.. math::
+
+    SSE = \sum_{i=1}^{n}
+        \begin{bmatrix}
+            x_i^2 \\
+            y_i^2 \\
+            z_i^2 \\
+            {q_x}_i^2 \\
+            {q_y}_i^2 \\
+            {q_z}_i^2 \\
+            {q_w}_i^2
+        \end{bmatrix}
+
+The square operation on the error vector :math:`e_i` is element-wise.
+
 .. LINK REFERENCES ---------------------------------------------------------------------------------
 
 .. _Eigen Main Page: https://eigen.tuxfamily.org/index.php?title=Main_Page
 .. _Quick Reference Guide: https://eigen.tuxfamily.org/dox/group__QuickRefPage.html
+.. _Coefficient Wise Operators: https://eigen.tuxfamily.org/dox/group__QuickRefPage.html#:~:text=top-,Coefficient%2Dwise%20%26%20Array%20operators,-In%20addition%20to
 
