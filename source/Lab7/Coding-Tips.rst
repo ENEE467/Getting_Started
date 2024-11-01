@@ -12,13 +12,13 @@ necessary for calculating the vectors and covariance matrix. Refer to the
 Operations on the pose and error vector
 ---------------------------------------
 
-End-effector poses and measurement errors in code is stored as a vector with 7 components. The first
+End-effector poses and measurement errors in code are stored as a vector with 7 components. The first
 three components store XYZ positions and the remaining four store the four components of the
 orientation quaternion.
 
 .. math::
 
-    \begin{bmatrix}x \\ y \\ z \\ q_x \\ q_y \\ q_z \\ q_w \end{bmatrix}
+    \begin{bmatrix} x \\ y \\ z \\ q_x \\ q_y \\ q_z \\ q_w \end{bmatrix}
 
 .. code-block:: C++
 
@@ -34,7 +34,7 @@ coefficient-wise ``square()`` method.
 
 .. math::
 
-    \begin{bmatrix}x^2 \\ y^2 \\ z^2 \\ {q_x}^2 \\ {q_y}^2 \\ {q_z}^2 \\ {q_w}^2 \end{bmatrix}
+    \begin{bmatrix} x^2 \\ y^2 \\ z^2 \\ {q_x}^2 \\ {q_y}^2 \\ {q_z}^2 \\ {q_w}^2 \end{bmatrix}
 
 .. code-block:: C++
 
@@ -49,7 +49,7 @@ For finding the transpose of the vector, simply use the ``transpose()`` method.
 
 .. math::
 
-    \begin{bmatrix}x^2 \\ y^2 \\ z^2 \\ {q_x}^2 \\ {q_y}^2 \\ {q_z}^2 \\ {q_w}^2 \end{bmatrix}^T
+    \begin{bmatrix} x \\ y \\ z \\ q_x \\ q_y \\ q_z \\ q_w \end{bmatrix}^T
 
 .. code-block:: C++
 
@@ -68,7 +68,7 @@ vector is the number of measurements taken.
     errors = \{ e_1, e_2, e_3, \ ... \ e_n \}
 
 .. code-block:: C++
-    
+
     std::vector<Eigen::Vector<double, 7>> error_vecs;
 
     auto number_of_measurements = error_vecs.size();
