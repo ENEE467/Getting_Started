@@ -26,6 +26,12 @@ them. Be sure to collect measurements from a broad range of positions, including
 Writing the code
 ^^^^^^^^^^^^^^^^
 
+.. toctree::
+  :maxdepth: 1
+  :hidden:
+
+  Lab7/Coding-Tips
+
 Verifying the calibration result involves these steps:
 
 - Finding the mean error vector
@@ -33,7 +39,7 @@ Verifying the calibration result involves these steps:
 - Finding the least squares error vector
 
 Implement these functions in the ``lab7/src/lab7.cpp`` source file located within the workspace
-source directory.
+source directory. Refer :doc:`this page </Lab7/Coding-Tips>` at any point for tips.
 
 - ``findMeanErrorVector()``
 - ``findCovarianceMatrix()``
