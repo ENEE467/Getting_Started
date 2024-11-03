@@ -5,13 +5,16 @@
 Lab 8
 =====
 
-The purpose of this lab is to familiarize you with the UR3e robot and the tools
-we have for making it do useful and/or interesting things. Additionally, you
-will cause the end point of the robot arm to move in both a square and circle in
-a vertical plane and in a horizontal plane. The Horizontal Plane is the plane
-perpendicular to Z-Axis and the Vertical plane is the plane perpendicular to
-either X or Y axes. Next, you will cause the end point of the arm to move in the
-largest possible square that is not in the horizontal plane.
+The purpose of this lab is to familiarize you with the UR3 robot and the tools we have for making it
+do useful and/or interesting things. Additionally, you will cause the end point of the robot arm to
+move in both a square and circle in a vertical plane and in a horizontal plane. The horizontal plane
+is the plane perpendicular to the Z-Axis and the vertical plane is the plane perpendicular to any
+line in the horizontal plane.
+
+First, you will cause the end point of the arm to move in the largest possible horizontal circle.
+Then you will cause the endpoint of the arm to move in the largest possible horizontal square. Next,
+cause the end point of the arm to move in the largest possible vertical square. Finally, you will
+cause the end point of the arm to move through the largest possible vertical circle.
 
 .. note::
 
