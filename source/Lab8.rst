@@ -132,9 +132,8 @@ Example 2:
   The program defaults to running the examples function if any of the ``<shape>`` or ``<plane>``
   arguments are missing or incorrect.
 
-  The program defaults to maximum size of 0.45 m radius or :math:`\frac{0.45}{\sqrt{2}}` m side
-  length if the ``<size>`` argument is missing or has a value less than or equal to zero.
-
+  Leaving the ``<size>`` argument as blank will set the maximum size of 0.45 m radius for the circle
+  or :math:`\frac{0.45}{\sqrt{2}}` m side length for square.
 
 Controlling the real UR3e arm
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
