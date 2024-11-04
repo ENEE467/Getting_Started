@@ -81,9 +81,10 @@ Finally, source the terminal before use just for the first time.
 
       VSCode Terminal
 
-   A terminal should automatically start at the bottom inside VSCode after configuring the
-   container, however if it doesn't, press the ``CTRL + ``` keys or select the ``Terminal`` option
-   from the ``View`` menu.
+   After configuring the container, a terminal should automatically start at the bottom of the
+   VSCode window. If it doesn't, press ``Ctrl + ``` or go to ``View > Terminal`` to open it.
+
+   You will use this terminal to execute most of the commands in the following lab exercises.
 
 Next Steps
 ^^^^^^^^^^

@@ -45,7 +45,8 @@ source directory. Refer :doc:`this page </Lab7/Coding-Tips>` at any point for ti
 - ``findCovarianceMatrix()``
 - ``findSumOfSquaredErrorsVector()``
 
-Build the packages and source the workspace after modifying the source code.
+Run this command in VSCode terminal to build the packages and source the workspace after
+modifying the source code.
 
 .. code-block:: bash
 
